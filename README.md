@@ -1,3 +1,5 @@
+![](https://content.gnoss.ws/imagenes/proyectos/personalizacion/7e72bf14-28b9-4beb-82f8-e32a3b49d9d3/cms/logognossazulprincipal.png)
+
 # Gnoss.Platform.OpenCORE
 GNOSS Platform es un Semantic Framework para desarrolladores que permite desarrollar soluciones de IA que explotan grafos de conocimiento.
 
