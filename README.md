@@ -1,7 +1,8 @@
 ![](https://content.gnoss.ws/imagenes/proyectos/personalizacion/7e72bf14-28b9-4beb-82f8-e32a3b49d9d3/cms/logognossazulprincipal.png)
 
 # Gnoss.Platform.OpenCORE
-GNOSS Platform es un Semantic Framework para desarrolladores que permite desarrollar soluciones de IA que explotan grafos de conocimiento.
+
+GNOSS Semantic AI Platform es un framework de desarrollo semántico (GNOSS Knowledge Graph Builder) que permite desarrollar soluciones de IA semántica que explotan grafos de conocimiento y un servidor de aplicaciones (GNOSS Semantic Application Server) que posibilita su despliegue y operación con garantías de seguridad, disponibilidad y rendimiento
 
 Gnoss Platform es una plataforma Web compleja que esta fromada por múltiples aplicaciones y usa varios sistemas de bases de datos. En este documento se explica cómo desplegar esta infraestructura a través de Docker, cómo y dónde establecer los parámetros de configuración de todas las aplicaciones de Gnoss Platform y qué parámetros configurar en el primer arranque de la aplicación. 
 
