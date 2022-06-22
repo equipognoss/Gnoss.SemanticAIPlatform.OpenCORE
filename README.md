@@ -139,6 +139,8 @@ networks:
         driver: bridge
 ```
 
+En los archivos docker-compose.yml de Postgre, RabbitMQ y Virtuoso existen usuarios o contraseñas con valores por defecto. Se recomienda cambiarlas antes de realizar el despliegue. Debes tener en cuenta que si estas contraseñas se cambian, es necesario actualizar las cadenas de conexión a Postgre, RabbitMQ y Virtuoso en los archivos .env de las [tareas en Background](https://github.com/equipognoss/Gnoss.SemanticAIPlatform.OpenCORE/blob/main/docker-compose_Background/.env) y las [aplicaciones Web](https://github.com/equipognoss/Gnoss.SemanticAIPlatform.OpenCORE/blob/main/docker-compose_Web/.env)
+
 # Listado de aplicaciones de Gnoss Platform Open CORE
 En gnoss platform podríamos distinguir 3 tipos de aplicaciones: 
 *	Web: Aplicación web principal que se encarga de guiar y validar todas las actividades de los usuarios. Orquesta al resto de aplicaciones de la plataforma mediante peticiones AJAX, peticiones REST o mensajes a través de colas. 
