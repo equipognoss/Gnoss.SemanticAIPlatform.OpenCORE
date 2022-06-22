@@ -4,10 +4,10 @@
 
 GNOSS Semantic AI Platform es un framework de desarrollo semántico (GNOSS Knowledge Graph Builder) que permite desarrollar soluciones de IA semántica que explotan grafos de conocimiento y un servidor de aplicaciones (GNOSS Semantic Application Server) que posibilita su publicación, despliegue y operación con las máximas garantías de seguridad, disponibilidad y rendimiento.
 
-Gnoss Platform es una plataforma Web compleja que esta fromada por múltiples aplicaciones y usa varios sistemas de bases de datos. En este documento se explica cómo desplegar esta infraestructura a través de Docker, cómo y dónde establecer los parámetros de configuración de todas las aplicaciones de Gnoss Platform y qué parámetros configurar en el primer arranque de la aplicación. 
+Gnoss Semantic AI Platform es una plataforma Web compleja que esta fromada por múltiples aplicaciones y usa varios sistemas de bases de datos. En este documento se explica cómo desplegar esta infraestructura a través de Docker, cómo y dónde establecer los parámetros de configuración de todas las aplicaciones de Gnoss Semantic AI Platform y qué parámetros configurar en el primer arranque de la aplicación. 
 
 # Instalación de los sistemas de base de datos
-Gnoss Platform usa distintos sistemas de bases de datos. En esta sección describimos cómo desplegar cada uno de ellos de manera rápida con Docker Compose. Para cada aplicación, se especifica un archivo docker-compose.yml. Para arrancar las aplicaciones definidas en un archivo docker-compose.yml, basta con subirla a un servidor que tenga docker instalado, situarse en la carpeta donde está almacenado el archivo docker-compose.yml y ejecutar la siguiente instrucción: 
+Gnoss Semantic AI Platform usa distintos sistemas de bases de datos. En esta sección describimos cómo desplegar cada uno de ellos de manera rápida con Docker Compose. Para cada aplicación, se especifica un archivo docker-compose.yml. Para arrancar las aplicaciones definidas en un archivo docker-compose.yml, basta con subirla a un servidor que tenga docker instalado, situarse en la carpeta donde está almacenado el archivo docker-compose.yml y ejecutar la siguiente instrucción: 
 docker-compose up -d
 Esa instrucción busca un archivo de nombre docker-compose.yml y arranca las aplicaciones definidas en el. Si el archivo no se llama exactamente docker-compose.yml, o no estás en el directorio donde lo has almacenado, puedes pasar el atributo -f “path/docker-compose-name.yml”.  
 
