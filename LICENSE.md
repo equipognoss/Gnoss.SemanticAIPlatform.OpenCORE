@@ -1,4 +1,4 @@
-#LICENCIA PÚBLICA GENERAL DE GNU DE GNOSS Semantic AI Platform GPL v3
+# LICENCIA PÚBLICA GENERAL DE GNU DE GNOSS Semantic AI Platform GPL v3
 
 La licencia bajo la cual se libera el software GNOSS Semantic AI Platform es la GPLv3 (o posterior) de la Free Software Foundation.  Versión 3, 29 de junio de 2007 Copyright © 2007 Free Software Foundation, Inc.  
 
