@@ -1,5 +1,7 @@
 LICENCIA PÚBLICA GENERAL DE GNU DE GNOSS Semantic AI Platform GPL v3
+
 La licencia bajo la cual se libera el software GNOSS Semantic AI Platform es la GPLv3 (o posterior) de la Free Software Foundation.  Versión 3, 29 de junio de 2007 Copyright © 2007 Free Software Foundation, Inc.  
+
 GNOSS Semantic AI Platform es propiedad de RIAM INTELEARNING LAB SL, con domicilio en 26006-Logroño, calle Piqueras 31, 4º planta, inscrita en el Registro Mercantil de La Rioja al tomo 512, folio 59, hoja número LO8085 y provista de CIF B26332791 y dispone, y dispondrá, de todos los derechos de autor, explotación y copyright a excepción de los otorgados en esta licencia.
 La licencia hace referencia única y exclusivamente a GNOSS Semantic AI Platform. RIAM es propietaria de otros programas, plataformas, etc. que están sujetas a copyright © y que no están amparadas por licencias de software libre.
 El software en sí mismo es completamente libre, bajo los términos de GPL v3. Sin embargo, el nombre de GNOSS y sus denominaciones derivadas son marcas registrada.
