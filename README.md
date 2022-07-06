@@ -239,7 +239,7 @@ Coming soon...
 # Código de conducta
 Este proyecto a adoptado el código de conducta definido por "Contributor Covenant" para definir el comportamiento esperado en las contribuciones a este proyecto. Para más información ver https://www.contributor-covenant.org/
 
-# Licensing
+# Licencia
 Gnoss Semantic AI Platform Open Core es un producto open source licenciado bajo GPLv3. 
 
 Gnoss Semantic AI Platform Enterprise incluye componentes adicionales de código cerrado no disponibles en este repositorio y requieren una licencia comercial. 
