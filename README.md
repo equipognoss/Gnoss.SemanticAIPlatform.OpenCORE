@@ -234,3 +234,7 @@ Estamos preparando el código fuente de todas estas aplicaciones para que sea li
 
 # Despliegue de las aplicaciones de Gnoss Platform
 Coming soon...
+
+
+# Código de conducta
+Este proyecto a adoptado el código de conducta definido por "Contributor Covenant" para definir el comportamiento esperado en las contribuciones a este proyecto. Para más información ver https://www.contributor-covenant.org/
