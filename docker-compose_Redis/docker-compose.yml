@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  redis:
+    container_name: redis_gnoss
+    image: redis:6.2.6
+    restart: always
+    ports:
+      - 6379:6379
+    environment:
+      save: 60 1
+      loglevel: warning
+    volumes:
+      - ./data:/data
+    networks:
+      - redis
+
+networks:
+  redis:
+    driver: bridge

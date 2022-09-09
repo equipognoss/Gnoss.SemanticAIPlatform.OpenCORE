@@ -1,0 +1,555 @@
+version: '3.8'
+
+services:
+     
+  mail:
+    image: gnoss/gnoss.backgroundtask.mail.opencore:0.0.0_beta
+    mem_limit: 500m
+    memswap_limit: 500m
+    restart: always
+    environment:
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     acid: ${acid}
+     base: ${base}
+     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: 60
+     idiomas: ${idiomas}
+     tipoBD: 0
+     Servicios__urlBase: ${Servicios__urlBase}
+     connectionType: ${connectionType}
+     intervalo: "100"
+    volumes:
+     - ./logs/mail:/app/logs
+              
+#  bidirectionalreplication:
+#    image: gnoss/bidirectionalreplication
+#    mem_limit: 500m
+#    memswap_limit: 500m
+#    restart: always
+#    environment:
+#     virtuosoConnectionString: ${virtuosoConnectionString}
+#     acid: ${acid}
+#     base: ${base}
+#     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
+#     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
+#     ColaReplicacionMaster_TablaReplicacion_VirtuosoLecturaPruebasGnoss_v3: ${ColaReplicacionMaster_TablaReplicacion_VirtuosoLecturaPruebasGnoss_v3}
+#     ColaReplicacionMaster_TablaReplicacion_VirtuosoLecturaPruebasGnoss_v4: ${ColaReplicacionMaster_TablaReplicacion_VirtuosoLecturaPruebasGnoss_v4}
+#     redis__redis__ip__master: ${redis__redis__ip__master}
+#     redis__redis__bd: ${redis__redis__bd}
+#     redis__redis__timeout: ${redis__redis__timeout}
+#     redis__recursos__ip__master: ${redis__recursos__ip__master}
+#     redis__recursos__bd: ${redis__recursos__bd}
+#     redis__recursos__timeout: 60
+#     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
+#     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
+#     redis__liveUsuarios__timeout: 60
+#     idiomas: ${idiomas}
+#     tipoBD: 0
+#     Servicios__urlBase: ${Servicios__urlBase}
+#     connectionType: ${connectionType}
+#     intervalo: "100"
+#    volumes:
+#     - ./logs/bidirectionalreplication:/app/logs 
+     
+  cacherefresh:
+    image: gnoss/gnoss.backgroundtask.cacherefresh.opencore:0.0.0_beta
+    mem_limit: 500m
+    memswap_limit: 500m
+    restart: always
+    environment:
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     acid: ${acid}
+     base: ${base}
+     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
+     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: 60
+     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
+     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
+     redis__liveUsuarios__timeout: 60
+     idiomas: ${idiomas}
+     tipoBD: 0
+     Servicios__urlBase: ${Servicios__urlBase}
+     Servicios__urlFacetas: ${Servicios__urlFacetas}
+     Servicios__urlResultados: ${Servicios__urlResultados}
+     connectionType: ${connectionType}
+     intervalo: "100"
+    volumes:
+     - ./logs/cacherefresh:/app/logs
+     
+  communitywall:
+    image: gnoss/gnoss.backgroundtask.communitywall.opencore:0.0.0_beta
+    mem_limit: 500m
+    memswap_limit: 500m
+    restart: always
+    environment:
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     acid: ${acid}
+     base: ${base}
+     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
+     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: 60
+     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
+     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
+     redis__liveUsuarios__timeout: 60
+     idiomas: ${idiomas}
+     tipoBD: 0
+     Servicios__urlBase: ${Servicios__urlBase}
+     connectionType: ${connectionType}
+     intervalo: "100"
+    volumes:
+     - ./logs/communitywall:/app/logs
+
+  distributor:
+    image: gnoss/gnoss.backgroundtask.distributor.opencore:0.0.0_beta
+    mem_limit: 500m
+    memswap_limit: 500m
+    restart: always
+    environment:
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     acid: ${acid}
+     base: ${base}
+     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
+     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: 60
+     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
+     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
+     redis__liveUsuarios__timeout: 60
+     idiomas: ${idiomas}
+     tipoBD: 0
+     Servicios__urlBase: ${Servicios__urlBase}
+     connectionType: ${connectionType}
+     intervalo: "100"
+    volumes:
+     - ./logs/distributor:/app/logs
+     
+#  replication:
+#    image: gnoss/gnoss.backgroundtask.replication.opencore:0.0.0_beta
+#    mem_limit: 500m
+#    memswap_limit: 500m
+#    restart: always
+#    environment:
+#     virtuosoConnectionString: ${virtuosoConnectionString}
+#     virtuosoConnectionString_home: ${virtuosoConnectionString_home}
+#     acid: ${acid}
+#     base: ${base}
+#     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
+#     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
+#     ColaReplicacionMaster_ColaReplicaVirtuosoTest1: ${ColaReplicacionMaster_ColaReplicaVirtuosoTest1}
+#     ColaReplicacionMaster_ColaReplicaVirtuosoTest2: ${ColaReplicacionMaster_ColaReplicaVirtuosoTest2}
+#     ColaReplicacionMasterHome__ColaReplicaHome1: ${ColaReplicacionMasterHome__ColaReplicaHome1}
+#     redis__redis__ip__master: ${redis__redis__ip__master}
+#     redis__redis__bd: ${redis__redis__bd}
+#     redis__redis__timeout: ${redis__redis__timeout}
+#     redis__recursos__ip__master: ${redis__recursos__ip__master}
+#     redis__recursos__bd: ${redis__recursos__bd}
+#     redis__recursos__timeout: 60
+#     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
+#     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
+#     redis__liveUsuarios__timeout: 60
+#     idiomas: ${idiomas}
+#     tipoBD: 0
+#     Servicios__urlBase: ${Servicios__urlBase}
+#     connectionType: ${connectionType}
+#     intervalo: "100"
+#    volumes:
+#     - ./logs/replication:/app/logs
+     
+#  linkeddata:
+#    image: gnoss/linkeddata
+#    mem_limit: 500m
+#    memswap_limit: 500m
+#    restart: always
+#    environment:
+#     virtuosoConnectionString: ${virtuosoConnectionString}
+#     acid: ${acid}
+#     base: ${base}
+#     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
+#     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
+#     redis__redis__ip__master: ${redis__redis__ip__master}
+#     redis__redis__bd: ${redis__redis__bd}
+#     redis__redis__timeout: ${redis__redis__timeout}
+#     redis__recursos__ip__master: ${redis__recursos__ip__master}
+#     redis__recursos__bd: ${redis__recursos__bd}
+#     redis__recursos__timeout: 60
+#     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
+#     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
+#     redis__liveUsuarios__timeout: 60
+#     idiomas: ${idiomas}
+#     tipoBD: 0
+#     Servicios__urlBase: ${Servicios__urlBase}
+#     connectionType: ${connectionType}
+#     intervalo: "100"
+#    volumes:
+#     - ./logs/linkeddata:/app/logs
+     
+  searchgraphgeneration:
+    image: gnoss/gnoss.backgroundtask.searchgraphgeneration.opencore:0.0.0_beta
+    mem_limit: 500m
+    memswap_limit: 500m
+    restart: always
+    environment:
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     acid: ${acid}
+     base: ${base}
+     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
+     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
+     replicacionActivadaHome: "false"
+     replicacionActivada: "false"
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: 60
+     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
+     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
+     redis__liveUsuarios__timeout: 60
+     idiomas: ${idiomas}
+     tipoBD: 0
+     Servicios__urlBase: ${Servicios__urlBase}
+     connectionType: ${connectionType}
+     intervalo: "100"
+    volumes:
+     - ./logs/searchgraphgeneration:/app/logs
+
+  socialsearchgraphgeneration:
+    image: gnoss/gnoss.backgroundtask.socialsearchgraphgeneration.opencore:0.0.0_beta
+    mem_limit: 500m
+    memswap_limit: 500m
+    restart: always
+    environment:
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     virtuosoConnectionString_home: ${virtuosoConnectionString_home}
+     acid: ${acid}
+     base: ${base}
+     replicacionActivadaHome: "false"
+     replicacionActivada: "false"
+     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
+     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: 60
+     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
+     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
+     redis__liveUsuarios__timeout: 60
+     idiomas: ${idiomas}
+     tipoBD: 0
+     Servicios__urlBase: ${Servicios__urlBase}
+     Servicios__urlServicioEtiquetadoAutomatico: ${Servicios__urlServicioEtiquetadoAutomatico}
+     connectionType: ${connectionType}
+     intervalo: "100"
+    volumes:
+     - ./logs/socialsearchgraphgeneration:/app/logs
+
+  socialcacherefresh:
+    image: gnoss/gnoss.backgroundtask.socialcacherefresh.opencore:0.0.0_beta
+    mem_limit: 500m
+    memswap_limit: 500m
+    restart: always
+    environment:
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     virtuosoConnectionString_home: ${virtuosoConnectionString_home}
+     acid: ${acid}
+     base: ${base}
+     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
+     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: 60
+     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
+     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
+     redis__liveUsuarios__timeout: 60
+     idiomas: ${idiomas}
+     tipoBD: 0
+     Servicios__urlBase: ${Servicios__urlBase}
+     Servicios__urlFacetas: ${Servicios__urlFacetas}
+     Servicios__urlResultados: ${Servicios__urlResultados}
+     connectionType: ${connectionType}
+     intervalo: "100"
+    volumes:
+     - ./logs/socialcacherefresh:/app/logs
+     
+  userwall:
+    image: gnoss/gnoss.backgroundtask.userwall.opencore:0.0.0_beta
+    mem_limit: 500m
+    memswap_limit: 500m
+    restart: always
+    environment:
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     acid: ${acid}
+     base: ${base}
+     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
+     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: 60
+     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
+     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
+     redis__liveUsuarios__timeout: 60
+     idiomas: ${idiomas}
+     tipoBD: 0
+     Servicios__urlBase: ${Servicios__urlBase}
+     connectionType: ${connectionType}
+     intervalo: "100"
+    volumes:
+     - ./logs/userwall:/app/logs    
+     
+  visitcluster:
+    image: gnoss/gnoss.backgroundtask.visitcluster.opencore:0.0.0_beta
+    mem_limit: 500m
+    memswap_limit: 500m
+    restart: always
+    environment:
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     acid: ${acid}
+     base: ${base}
+     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
+     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: 60
+     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
+     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
+     redis__liveUsuarios__timeout: 60
+     idiomas: ${idiomas}
+     tipoBD: 0
+     Servicios__urlBase: ${Servicios__urlBase}
+     connectionType: ${connectionType}
+     intervalo: "100"
+    volumes:
+     - ./logs/visitcluster:/app/logs
+     - ./visitcluster/:/app/elementos     
+ 
+  visitregistry:
+    image: gnoss/gnoss.backgroundtask.visitregistry.opencore:0.0.0_beta
+    ports:
+     - 8545:1745
+    mem_limit: 500m
+    memswap_limit: 500m
+    restart: always
+    environment:
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     acid: ${acid}
+     base: ${base}
+     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
+     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: 60
+     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
+     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
+     redis__liveUsuarios__timeout: 60
+     idiomas: ${idiomas}
+     tipoBD: 0
+     Servicios__urlBase: ${Servicios__urlBase}
+     connectionType: ${connectionType}
+     intervalo: "100"
+    volumes:
+     - ./logs/visitregistry:/app/logs 
+     - ./visitregistry/Recursos:/app/recursos
+     - ./visitregistry/Votos:/app/Votos
+     - ./visitregistry/Visitas:/app/Visitas
+
+  subscriptionsmail:
+    image: gnoss/gnoss.backgroundtask.subscriptionsmail.opencore:0.0.0_beta
+    mem_limit: 500m
+    memswap_limit: 500m
+    restart: always
+    environment:
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     acid: ${acid}
+     base: ${base}
+     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
+     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: 60
+     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
+     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
+     redis__liveUsuarios__timeout: 60
+     idiomas: ${idiomas}
+     tipoBD: 0
+     Servicios__urlBase: ${Servicios__urlBase}
+     connectionType: ${connectionType}
+     intervalo: "100"
+    volumes:
+     - ./logs/subscriptionsmail:/app/logs 
+     
+#  automatic_sharing:
+#    image: gnoss/automaticsharing
+#    mem_limit: 500m
+#    memswap_limit: 500m
+#    restart: always
+#    environment:
+#     virtuosoConnectionString: ${virtuosoConnectionString}
+#     acid: ${acid}
+#     base: ${base}
+#     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
+#     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
+#     redis__redis__ip__master: ${redis__redis__ip__master}
+#     redis__redis__bd: ${redis__redis__bd}
+#     redis__redis__timeout: ${redis__redis__timeout}
+#     redis__recursos__ip__master: ${redis__recursos__ip__master}
+#     redis__recursos__bd: ${redis__recursos__bd}
+#     redis__recursos__timeout: 60
+#     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
+#     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
+#     redis__liveUsuarios__timeout: 60
+#     idiomas: ${idiomas}
+#     tipoBD: 0
+#     Servicios__urlBase: ${Servicios__urlBase}
+#     connectionType: ${connectionType}
+#     intervalo: "100"
+#    volumes:
+#     - ./logs/automatic_sharing:/app/logs 
+# 
+#  massive_data_loader:
+#    image: gnoss/massivedataloader
+#    mem_limit: 500m
+#    memswap_limit: 500m
+#    restart: always
+#    environment:
+#     virtuosoConnectionString: ${virtuosoConnectionString}
+#     acid: ${acid}
+#     base: ${base}
+#     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
+#     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
+#     redis__redis__ip__master: ${redis__redis__ip__master}
+#     redis__redis__bd: ${redis__redis__bd}
+#     redis__redis__timeout: ${redis__redis__timeout}
+#     redis__recursos__ip__master: ${redis__recursos__ip__master}
+#     redis__recursos__bd: ${redis__recursos__bd}
+#     redis__recursos__timeout: 60
+#     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
+#     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
+#     redis__liveUsuarios__timeout: 60
+#     idiomas: ${idiomas}
+#     tipoBD: 0
+#     Servicios__urlBase: ${Servicios__urlBase}
+#     connectionType: ${connectionType}
+#     intervalo: "100"
+#     ruta: ""
+#    volumes:
+#     - ./logs/massive_data_loader:/app/logs 
+#      
+#  newsletters:
+#    image: gnoss/newsletters
+#    mem_limit: 500m
+#    memswap_limit: 500m
+#    restart: always
+#    environment:
+#     virtuosoConnectionString: ${virtuosoConnectionString}
+#     acid: ${acid}
+#     base: ${base}
+#     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
+#     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
+#     redis__redis__ip__master: ${redis__redis__ip__master}
+#     redis__redis__bd: ${redis__redis__bd}
+#     redis__redis__timeout: ${redis__redis__timeout}
+#     redis__recursos__ip__master: ${redis__recursos__ip__master}
+#     redis__recursos__bd: ${redis__recursos__bd}
+#     redis__recursos__timeout: 60
+#     idiomas: ${idiomas}
+#     tipoBD: 0
+#     Servicios__urlBase: ${Servicios__urlBase}
+#     connectionType: ${connectionType}
+#     intervalo: "100"
+#     ruta: ""
+#    volumes:
+#     - ./logs/newsletters:/app/logs 
+     
+#  autocomplete_generator:
+#    image: gnoss/gnoss.backgroundtask.subscriptionsmail.opencore:0.0.0_beta
+#    mem_limit: 500m
+#    memswap_limit: 500m
+#    restart: always
+#    environment:
+#     virtuosoConnectionString: ${virtuosoConnectionString}
+#     acid: ${acid}
+#     base: ${base}
+#     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
+#     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
+#     redis__redis__ip__master: ${redis__redis__ip__master}
+#     redis__redis__bd: ${redis__redis__bd}
+#     redis__redis__timeout: ${redis__redis__timeout}
+#     redis__recursos__ip__master: ${redis__recursos__ip__master}
+#     redis__recursos__bd: ${redis__recursos__bd}
+#     redis__recursos__timeout: 60
+#     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
+#     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
+#     redis__liveUsuarios__timeout: 60
+#     idiomas: ${idiomas}
+#     tipoBD: 0
+#     Servicios__urlBase: ${Servicios__urlBase}
+#     connectionType: ${connectionType}
+#     intervalo: "100"
+#     Servicios__urlLucene: ${Servicios__urlLucene}
+#    volumes:
+#     - ./logs/autocomplete_generator:/app/logs
+     
+  thumbnail:
+    image: gnoss/gnoss.backgroundtask.thumbnailgenerator.opencore:0.0.0_beta
+    mem_limit: 500m
+    memswap_limit: 500m
+    restart: always
+    environment:
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     acid: ${acid}
+     base: ${base}
+     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
+     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: 60
+     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
+     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
+     redis__liveUsuarios__timeout: 60
+     idiomas: ${idiomas}
+     tipoBD: 0
+     Servicios__urlBase: ${Servicios__urlBase}
+     connectionType: ${connectionType}
+     intervalo: "100"
+     Servicios__urlInterno: ${Servicios__urlInterno}
+    volumes:
+     - ./logs/thumbnail:/app/logs

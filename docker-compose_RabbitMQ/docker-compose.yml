@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  rabbitmq:
+    container_name: rabbitmq_gnoss
+    image: rabbitmq:3.8-management-alpine
+    restart: always
+    hostname: 'rabbitmq_gnoss'
+    environment:
+      #<<Indicamos nuestro usuario>>#
+      - RABBITMQ_DEFAULT_USER=gnoss
+      #<<Indicamos nuestra contraseña>>#
+      - RABBITMQ_DEFAULT_PASS=gnoss1234
+    ports:
+      #<<AMQP protocol port>>#
+      - 5672:5672
+      #<<HTTP management UI>>#
+      - 15672:15672
+    volumes:
+      - ./data:/var/lib/rabbitmq
+      - ./log:/var/log/rabbitmq
+    networks:
+      - rabbit_red
+
+networks:
+    rabbit_red:
+        driver: bridge

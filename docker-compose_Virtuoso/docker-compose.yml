@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  virtuoso:
+    container_name: virtuoso_gnoss
+    image: openlink/virtuoso-opensource-7:latest
+    restart: always
+    environment:
+      DBA_PASSWORD: gnoss1234 #<<Indicamos nuestra contraseña>>#
+      VIRTUOSO_INI_FILE:
+      VIRT_Parameters_NumberOfBuffers: 680000
+      VIRT_Parameters_MaxDirtyBuffers: 500000
+      VIRT_Parameters_MaxClientConnections: 100
+      VIRT_Parameters_DirsAllowed: "./dumps"
+      VIRT_HTTPServer_MaxClientConnections: 50
+      VIRT_HTTPServer_ServerIdString: "virtuoso"
+      VIRT_Zero Config_ServerName: "virtuoso"
+      VIRT_I18N_XAnyNormalization: 3
+    ports:
+      - 1111:1111
+      - 8890:8890
+    volumes:
+      - ./database:/database
+    networks:
+      - virtuoso_red
+
+networks:
+    virtuoso_red:
+        driver: bridge

@@ -1,0 +1,407 @@
+version: '3.8'
+
+services:
+        
+  web:
+    image: gnoss/gnoss.web.opencore:0.0.0_beta
+    ports:
+     - 8580:80
+    mem_limit: 700m
+    memswap_limit: 700m
+    restart: always
+    environment:
+     acid: ${acid}
+     base: ${base}
+     oauth: ${oauth}
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     virtuosoConnectionString_home: ${virtuosoConnectionString_home}
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__ip__read: ${redis__redis__ip__read}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__ip__read: ${redis__recursos__ip__read}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: ${redis__redis__timeout}
+     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
+     redis__liveUsuarios__ip__read: ${redis__liveUsuarios__ip__read}
+     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
+     redis__liveUsuarios__timeout: ${redis__redis__timeout}
+     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
+     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
+     idiomas: ${idiomas}
+     IpServicioSocketsOffline: ${IpServicioSocketsOffline}
+     PuertoServicioSocketsOffline: ${PortServicioSocketsOffline}
+     Servicios__urlLogin: ${Servicios__urlLogin}
+     Servicios__urlFacetas: "http://facetas/CargadorFacetas"
+     Servicios__urlFacetas__externo: ${Servicios__urlFacetas__externo}
+     Servicios__urlResultados: "http://resultados/CargadorResultados"
+     Servicios__contextosHome: ${Servicios__contextosHome}
+     Servicios__urlResultados__externo: ${Servicios__urlResultados__externo}
+     Servicios__autocompletar: ${Servicios__autocompletar}
+     Servicios__etiquetadoAutomatico: ${Servicios__etiquetadoAutomatico}
+     Servicios__autocompletarEtiquetas: ${Servicios__autocompletarEtiquetas}
+     Servicios__urlInterno: "http://interno"
+     Servicios__urlArchivos: ${Servicios__urlArchivos}
+     Servicios__urlDocuments: "http://documents/GestorDocumental"
+     Servicios__urlContent: ${Servicios__urlContent}
+     Servicios__urlStatic: ${Servicios__urlStatic}
+     dominio: ${dominio}
+     https: "true"
+     connectionType: ${connectionType}
+     replicacionActivadaHome: "false"
+     replicacionActivada: "false"
+     DesplegadoDocker: "true"
+    volumes:
+      - ./logs/web:/app/logs
+      - ./logs/web:/app/trazas
+      - ./ViewsAdministracion:/app/ViewsAdministracion
+  
+  login:
+    image: gnoss/gnoss.web.login.opencore:0.0.0_beta
+    ports:
+     - 8581:80
+    mem_limit: 200m
+    memswap_limit: 200m
+    restart: always
+    environment:
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     acid: ${acid}
+     base: ${base}
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__ip__read: ${redis__redis__ip__read}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__ip__read: ${redis__recursos__ip__read}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: ${redis__redis__timeout}
+     idiomas: ${idiomas}
+     Servicios__urlBase: ${Servicios__urlBase}
+     connectionType: ${connectionType} 
+    volumes:
+      - ./logs/login:/app/logs
+  
+  facets:
+    image: gnoss/gnoss.web.facets.opencore:0.0.0_beta
+    ports:
+     - 8582:80
+    mem_limit: 300m
+    memswap_limit: 300m
+    restart: always
+    environment:
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     virtuosoConnectionString_home: ${virtuosoConnectionString_home}
+     acid: ${acid}
+     base: ${base}
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__ip__read: ${redis__redis__ip__read}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__ip__read: ${redis__recursos__ip__read}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: ${redis__redis__timeout}
+     idiomas: ${idiomas}
+     Servicios__urlBase: ${Servicios__urlBase}
+     connectionType: ${connectionType}
+    volumes:
+      - ./logs/facets:/app/logs
+      - ./logs/facets:/app/trazas
+  
+  results:
+    image: gnoss/gnoss.web.results.opencore:0.0.0_beta
+    ports:
+     - 8583:80
+    mem_limit: 300m
+    memswap_limit: 300m
+    restart: always
+    environment:
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     virtuosoConnectionString_home: ${virtuosoConnectionString_home}
+     acid: ${acid}
+     base: ${base}
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__ip__read: ${redis__redis__ip__read}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__ip__read: ${redis__recursos__ip__read}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: ${redis__redis__timeout}
+     idiomas: ${idiomas}
+     Servicios__urlBase: ${Servicios__urlBase}
+     Servicios__urlContent: ${Servicios__urlContent}
+     Servicios__urlStatic: ${Servicios__urlStatic}
+     connectionType: ${connectionType}
+    volumes:
+      - ./logs/results:/app/logs
+      - ./logs/results:/app/trazas
+     
+  intern:
+    image: gnoss/gnoss.web.intern.opencore:0.0.0_beta
+    ports:
+     - 8584:80
+    mem_limit: 200m
+    memswap_limit: 200m
+    restart: always
+    environment:
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     acid: ${acid}
+     base: ${base}
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__ip__read: ${redis__redis__ip__read}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__ip__read: ${redis__recursos__ip__read}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: ${redis__redis__timeout}
+     idiomas: ${idiomas}
+     Servicios__urlBase: ${Servicios__urlBase}
+     connectionType: ${connectionType}
+    volumes:
+      - ./logs/intern:/app/logs
+      - ./content/doclinks:/app/doclinks
+      - ./content/imagenes:/app/imagenes
+      - ./content/ImagenesEnlaces:/app/ImagenesEnlaces
+      - ./content/Videos:/app/Videos  
+     
+  ontologies:
+    image: gnoss/gnoss.web.ontologies.opencore:0.0.0_beta
+    ports:
+     - 8585:80
+    mem_limit: 200m
+    memswap_limit: 200m
+    restart: always
+    environment:
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     acid: ${acid}
+     base: ${base}
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__ip__read: ${redis__redis__ip__read}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__ip__read: ${redis__recursos__ip__read}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: ${redis__redis__timeout}
+     idiomas: ${idiomas}
+     Servicios__urlBase: ${Servicios__urlBase}
+     connectionType: ${connectionType}
+     rutaOntologias: "/app/Ontologias/Archivos"
+    volumes:
+      - ./logs/ontologies:/app/logs
+      - ./content/ontologies:/app/Ontologias
+     
+  documents:
+    image: gnoss/gnoss.web.documents.opencore:0.0.0_beta
+    ports:
+     - 8586:80
+    mem_limit: 200m
+    memswap_limit: 200m
+    restart: always
+    environment:
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     acid: ${acid}
+     base: ${base}
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__ip__read: ${redis__redis__ip__read}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__ip__read: ${redis__recursos__ip__read}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: ${redis__redis__timeout}
+     idiomas: ${idiomas}
+     Servicios__urlBase: ${Servicios__urlBase}
+     connectionType: ${connectionType}
+    volumes:
+      - ./logs/documents:/app/logs
+      - ./content/Documentacion:/app/Documentacion
+            
+  autocomplete:
+    image: gnoss/gnoss.web.autocomplete.opencore:0.0.0_beta
+    ports:
+     - 8587:80
+    mem_limit: 200m
+    memswap_limit: 200m
+    restart: always
+    environment:
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     virtuosoConnectionString_home: ${virtuosoConnectionString_home}
+     acid: ${acid}
+     base: ${base}
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__ip__read: ${redis__redis__ip__read}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__ip__read: ${redis__recursos__ip__read}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: ${redis__redis__timeout}
+     idiomas: ${idiomas}
+     Servicios__urlBase: ${Servicios__urlBase}
+     connectionType: ${connectionType}
+    volumes:
+      - ./logs/autocomplete:/app/logs
+      
+  api:
+    image: gnoss/gnoss.web.api.opencore:0.0.0_beta
+    ports:
+     - 8589:80
+    mem_limit: 300m
+    memswap_limit: 300m
+    restart: always
+    environment:
+     acid: ${acid}
+     base: ${base}
+     oauth: ${oauth}
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__ip__read: ${redis__redis__ip__read}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__ip__read: ${redis__recursos__ip__read}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: ${redis__redis__timeout}
+     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
+     redis__liveUsuarios__ip__read: ${redis__liveUsuarios__ip__read}
+     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
+     redis__liveUsuarios__timeout: ${redis__redis__timeout}
+     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
+     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
+     idiomas: ${idiomas}
+     IpServicioSocketsOffline: ${IpServicioSocketsOffline}   
+     PuertoServicioSocketsOffline: ${PortServicioSocketsOffline}                           
+     Servicios__urlLogin: ${Servicios__urlLogin}
+     Servicios__urlFacetas: "http://facetas/CargadorFacetas"
+     Servicios__urlResultados: "http://resultados/CargadorResultados"
+     Servicios__urlFacetas__externo: ${Servicios__urlFacetas__externo}
+     Servicios__urlResultados__externo: ${Servicios__urlResultados__externo}
+     Servicios__autocompletar: ${Servicios__autocompletar}
+     Servicios__urlInterno: "http://interno"
+     Servicios__urlArchivos: ${Servicios__urlArchivos}
+     Servicios__urlDocuments: "http://documents/GestorDocumental"
+     Servicios__urlContent: ${Servicios__urlContent}
+     Servicios__urlOauth: "http://oauth/"
+     connectionType: ${connectionType}
+     replicacionActivadaHome: "false"
+     replicacionActivada: "false"
+    volumes:
+      - ./logs/api:/app/logs
+      
+  oauth:
+    image: gnoss/gnoss.web.oauth.opencore:0.0.0_beta
+    ports:
+     - 8590:80
+    mem_limit: 200m
+    memswap_limit: 200m
+    restart: always
+    environment:
+     acid: ${acid}
+     base: ${base}
+     oauth: ${oauth}
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__ip__read: ${redis__redis__ip__read}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__ip__read: ${redis__recursos__ip__read}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: ${redis__redis__timeout}
+     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
+     redis__liveUsuarios__ip__read: ${redis__liveUsuarios__ip__read}
+     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
+     redis__liveUsuarios__timeout: ${redis__redis__timeout}
+     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
+     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
+     idiomas: ${idiomas}
+     IpServicioSocketsOffline: ${IpServicioSocketsOffline}
+     PuertoServicioSocketsOffline: ${PortServicioSocketsOffline}
+     Servicios__urlLogin: ${Servicios__urlLogin}
+     Servicios__urlFacetas: "http://facetas/CargadorFacetas"
+     Servicios__urlResultados: "http://resultados/CargadorResultados"
+     Servicios__urlFacetas__externo: ${Servicios__urlFacetas__externo}
+     Servicios__urlResultados__externo: ${Servicios__urlResultados__externo}
+     Servicios__autocompletar: ${Servicios__autocompletar}
+     Servicios__urlInterno: "http://interno"
+     Servicios__urlArchivos: ${Servicios__urlArchivos}
+     Servicios__urlDocuments: "http://documents/GestorDocumental"
+     Servicios__urlContent: ${Servicios__urlContent}
+     Servicios__urlOauth: "http://oauth"
+     connectionType: ${connectionType}
+    volumes:
+      - ./logs/oauth:/app/logs
+     
+#  lucene_autocomplete:
+#    image: gnoss/luceneautocomplete
+#    ports:
+#     - 8592:80
+#    mem_limit: 200m
+#    memswap_limit: 200m
+#    restart: always
+#    environment:
+#     acid: ${acid}
+#     base: ${base}
+#     virtuosoConnectionString: ${virtuosoConnectionString}
+#     redis__redis__ip__master: ${redis__redis__ip__master}
+#     redis__redis__ip__read: ${redis__redis__ip__read}
+#     redis__redis__bd: ${redis__redis__bd}
+#     redis__redis__timeout: ${redis__redis__timeout}
+#     redis__recursos__ip__master: ${redis__recursos__ip__master}
+#     redis__recursos__ip__read: ${redis__recursos__ip__read}
+#     redis__recursos__bd: ${redis__recursos__bd}
+#     redis__recursos__timeout: ${redis__redis__timeout}
+#     idiomas: ${idiomas}
+#     tipoBD: 0
+#     Servicios__urlLucene: ${Servicios__urlLucene}
+#     Servicios__urlBase: ${Servicios__urlBase}
+#     connectionType: "0" 
+#    volumes:
+#      - ./logs/lucene_autocomplete:/app/logs
+#      
+#      
+#  lucene_api:
+#    image: gnoss/luceneapi
+#    ports:
+#     - 8591:80
+#    mem_limit: 300m
+#    memswap_limit: 300m
+#    restart: always
+#    environment:
+#     UbicacionIndiceLucene: "indices"
+#    volumes:
+#      - ./logs/lucene_api:/app/logs
+#      - ./indices_lucene:/app/indices      
+      
+      
+  labeler:
+    image: gnoss/gnoss.web.labeler.opencore:0.0.0_beta
+    ports:
+     - 8595:80
+    mem_limit: 200m
+    memswap_limit: 200m
+    restart: always
+    environment:
+     virtuosoConnectionString: ${virtuosoConnectionString}
+     virtuosoConnectionString_home: ${virtuosoConnectionString_home}
+     acid: ${acid}
+     base: ${base}
+     redis__redis__ip__master: ${redis__redis__ip__master}
+     redis__redis__ip__read: ${redis__redis__ip__read}
+     redis__redis__bd: ${redis__redis__bd}
+     redis__redis__timeout: ${redis__redis__timeout}
+     redis__recursos__ip__master: ${redis__recursos__ip__master}
+     redis__recursos__ip__read: ${redis__recursos__ip__read}
+     redis__recursos__bd: ${redis__recursos__bd}
+     redis__recursos__timeout: ${redis__redis__timeout}
+     idiomas: ${idiomas}
+     tipoBD: 0
+     Servicios__urlBase: ${Servicios__urlBase}
+     connectionType: "0"
+    volumes:
+      - ./logs/labeler:/app/logs
+      - ./logs/labeler:/app/trazas
