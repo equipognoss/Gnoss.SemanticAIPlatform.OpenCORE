@@ -233,13 +233,7 @@ Aplicación de segundo plano que expone un puerto UDP, al que la Web le envía l
 Estamos preparando el código fuente de todas estas aplicaciones para que sea liberado, en breve cada aplicación estará enlazada a su respectivo repositorio en GitHub. 
 
 # Despliegue de las aplicaciones de Gnoss Platform con Docker Compose
-En esta sección se describe el despliegue de todas las aplicaciones de Gnoss Platform a través de un archivo docker-compose. En gnoss platform podríamos distinguir 3 tipos de aplicaciones: 
-*	Web: Aplicación web principal que se encarga de guiar y validar todas las actividades de los usuarios. Orquesta al resto de aplicaciones de la plataforma mediante peticiones AJAX, peticiones REST o mensajes a través de colas. 
-*	Microservicios Web: Conjunto de aplicaciones Web con una responsabilidad única y bien definida. Algunos de ellos son usados exclusivamente por la propia Web a través de peticiones REST (OAuth, Interno, Archivos, GestorDocumental), otros sólo se usan a través de peticiones AJAX (autocompletar, login, contextos…), y otros son mixtos, reciben peticiones vía AJAX y via petición REST a través de la Web (facetas y resultados). 
-*	Tareas en segundo plano: Conjunto de aplicaciones que ejecutan tareas periódicas o están esperando a que se produzca determinado evento para realizar determinadas acciones en función del evento. Ejemplos: 
-    *	Cada vez que se registra un usuario, se envía un evento al servicio de correo para enviar un email de validación. 
-    *	Cada vez que se crea un recurso, se envía un mensaje al servicio SearchGraphGeneration para que genere los índices de búsqueda necesarios. 
-    *	Etc. 
+En esta sección se describe el despliegue de todas las aplicaciones de Gnoss Platform a través de un archivo docker-compose. 
 
 Si el despliegue se realiza en máquinas virtuales a través de docker-compose, recomendamos desplegar GNOSS sobre dos máquinas virtuales, una para las aplicaciones web (Web y microservicios web) y otra para las tareas en segundo plano. De esa manera, sin las aplicaciones en segundo plano llegan a saturar la máquina por alguna razón, la experiencia de usuario de la Web no se verá afectada.  
 
