@@ -232,8 +232,112 @@ Aplicación de segundo plano que expone un puerto UDP, al que la Web le envía l
 
 Estamos preparando el código fuente de todas estas aplicaciones para que sea liberado, en breve cada aplicación estará enlazada a su respectivo repositorio en GitHub. 
 
-# Despliegue de las aplicaciones de Gnoss Platform
-Coming soon...
+# Despliegue de las aplicaciones de Gnoss Platform con Docker Compose
+En esta sección se describe el despliegue de todas las aplicaciones de Gnoss Platform a través de un archivo docker-compose. En gnoss platform podríamos distinguir 3 tipos de aplicaciones: 
+*	Web: Aplicación web principal que se encarga de guiar y validar todas las actividades de los usuarios. Orquesta al resto de aplicaciones de la plataforma mediante peticiones AJAX, peticiones REST o mensajes a través de colas. 
+*	Microservicios Web: Conjunto de aplicaciones Web con una responsabilidad única y bien definida. Algunos de ellos son usados exclusivamente por la propia Web a través de peticiones REST (OAuth, Interno, Archivos, GestorDocumental), otros sólo se usan a través de peticiones AJAX (autocompletar, login, contextos…), y otros son mixtos, reciben peticiones vía AJAX y via petición REST a través de la Web (facetas y resultados). 
+*	Tareas en segundo plano: Conjunto de aplicaciones que ejecutan tareas periódicas o están esperando a que se produzca determinado evento para realizar determinadas acciones en función del evento. Ejemplos: 
+    *	Cada vez que se registra un usuario, se envía un evento al servicio de correo para enviar un email de validación. 
+    *	Cada vez que se crea un recurso, se envía un mensaje al servicio SearchGraphGeneration para que genere los índices de búsqueda necesarios. 
+    *	Etc. 
+
+Si el despliegue se realiza en máquinas virtuales a través de docker-compose, recomendamos desplegar GNOSS sobre dos máquinas virtuales, una para las aplicaciones web (Web y microservicios web) y otra para las tareas en segundo plano. De esa manera, sin las aplicaciones en segundo plano llegan a saturar la máquina por alguna razón, la experiencia de usuario de la Web no se verá afectada.  
+
+En el repositorio que te enlazamos debajo puedes descargarte los archivos docker-compose para desplegar todas las aplicaciones Web (docker-compose-web.yml) y todas las tareas en segundo plano (docker-compose-background.yml). Si hay aplicaciones que no van a ser usadas en tu proyecto, puedes eliminar los servicios innecesarios declarados ahí. En esos archivos, se hace referencia a las variables de entorno declaradas en dos archivos de entorno (web.env y background.env). Deberás editar ese archivo para establecer tus cadenas de conexión y configuraciones específicas y ponerlo junto al archivo docker-compose correspondiente con el nombre “.env”. 
+
+Puedes encontrar todos esos archivos en este repositorio, dentro de la carpeta docker-compose: https://github.com/equipognoss/Gnoss.Platform.Deploy/tree/main/docker-compose.
+
+# Despliegue de las aplicaciones de Gnoss Platform con Kubernetes
+Comming soon...
+
+# Configuración de aplicaciones Web con Nginx
+Proponemos usar Nginx como Servidor web y proxy inverso, que redirija el tráfico que llegue al servidor al contenedor docker correspondiente. Dentro del directorio nginx de este repositorio (https://github.com/equipognoss/Gnoss.Platform.Deploy/tree/main/nginx) encontrarás los archivos de configuración necesarios para hacer desplegar en Nginx los sitios web que hacer referencia a las aplicaciones Web de la plataforma Gnoss: 
+1.	test.com: Archivo de configuración de nginx para la aplicación Web principal. En este archivo se configura un proxy inverso al contenedor de la aplicación Gnoss.Web desplegado. 
+2.	api.test.com: Archivo de configuración de nginx para el Api de Gnoss. En este archivo se configura un proxy inverso al contenedor de la aplicación Gnoss.Web.Api desplegado.
+3.	servicios.test.com: Archivo de configuración de nginx que contiene las configuraciones para realizar un proxy inverso al resto de aplicaciones Web desplegadas. Cada aplicación estará ubicada en un subdirectorio del dominio especificado (servicios.test.com/login, servicios.test.com/oauth…). 
+Para poder reutilizar estos archivos, debes revisar tus dominios y reemplazar los de los ejemplos (test.gnoss.com, servicios.test.com y api.gnoss.com), las rutas absolutas que aparecen en esos archivos y los puertos de las aplicaciones que has desplegado.
+
+# Recopilatorio de parámetros de configuración
+En esta sección desgranamos todos los parámetros de configuración posibles que existen en GNOSS Platform y las distintas opciones para configurarlas. 
+Los parámetros necesarios de las aplicaciones que componen Gnoss Platform cuentan con dos formas de configuración: una mediante variables de entorno en un docker-compose.yml y otra mediante un archivo appsettings.json típico de las aplicaciones .Net Core. En caso de que existan ambos archivos de configuración, es decir tener parámetros de configuración tanto del docker-compose.yml como en el appsettings.json, siempre se dará prioridad a las variables de entorno del archivo docker-compose.yml.
+
+A continuación describimos las configuraciones posibles a través de variables de entorno. Si quieres ver las configuraciones posibles a través del archivo appsettings.json propio de las aplicaciones .Net, puedes verlo aquí: https://github.com/equipognoss/Gnoss.Platform.Deploy/tree/main/appsettings. 
+
+* acid: cadena de conexión a la base de datos donde está el esquema principal de las tablas de Gnoss.
+* base: cadena de conexión a la  base de datos donde están las tablas de ColaCorreo y ColaCorreoDestinatrio así como los RDF
+* oauth: cadena de conexión a la base de datos donde están las tablas necesarias para la autenticación oauth.
+* AzureStorageConnectionString: cadena de conexión para azure.
+* virtuosoConnectionString: cadena de conexión de virtuoso.
+* virtuosoConnectionString_home: cadena de conexión de virtuoso para actividad reciente, si no está configurada se usa la cadena de conexión configurada en virtuosoConnectionString.
+* redis__redis__ip__master: ip de redis tanto de escritura como de lectura para el pool de redis.
+* redis__redis__ip__read: ip de redis de lectura para el pool de redis. Esta configuración es opcional, pero hay que tener configurada la ip__master para este pool.
+* redis__redis__bd: base de datos de redis para el pool de redis.
+* redis__redis__timeout: timeout  para el pool de redis.
+* redis__recursos__ip__master: ip de redis tanto de escritura como de lectura para el pool de recursos.
+* redis__recursos__ip__read: ip de redis de lectura para el pool de recursos. Esta configuración es opcional, pero hay que tener configurada la ip__master para este pool.
+* redis__recursos__bd: base de datos de redis para el pool de recursos.
+* redis__recursos__timeout: timeout  para el pool de recursos.
+* redis__liveUsuarios__ip__master: ip de redis tanto de escritura como de lectura para el pool de liveUsuarios.
+* redis__liveUsuarios__ip__read: ip de redis de lectura para el pool de liveUsuarios. Esta configuración es opcional, pero hay que tener configurada la ip__master para este pool.
+* redis__liveUsuarios__bd: base de datos de redis para el pool de liveUsuarios.
+* redis__liveUsuarios__timeout: timeout  para el pool de liveUsuarios.
+* redis__bandeja__ip__master: ip de redis tanto de escritura como de lectura para el pool de bandeja.
+* redis__bandeja__ip__read: ip de redis de lectura para el pool de bandeja. Esta configuración es opcional, pero hay que tener configurada la ip__master para este pool.
+* redis__bandeja__bd: base de datos de redis para el pool de bandeja.
+* redis__bandeja__timeout: timeout  para el pool de bandeja.
+* RabbitMQ__colaReplicacion: cadena de conexión de Rabbit que se va a usar para la replicación.
+* RabbitMQ__colaServiciosWin: cadena de conexión de Rabbit que van a usar los servicios.
+* idiomas: lista de idiomas soportados por la aplicación. Los elementos de la lista irán separados entre comas y cada elemento tendrá el siguiente patrón, abreviatura del idioma|nombre del idioma; Ej: "es|Español,en|English" 
+* IpServicioSocketsOffline: ip del servicio visit registry.
+* PuertoServicioSocketsOffline: puerto del servicio visit registry.
+* Servicios__urlLogin: url donde se aloja el servicio de login.
+* Servicios__urlFacetas: url donde se aloja el servicio de facetas, si estuviera instalado el servicio de facetas en el mismo docker-compose esta url sería la interna, es decir, http://facetas/CargadorFacetas.
+* Servicios__urlResultados: url donde se aloja el servicio de resultados, si estuviera instalado el servicio de resultados en el mismo docker-compose esta url sería la interna, es decir, http://facetas/CargadorResultados.
+* Servicios__contextosHome: url donde se aloja el servicio de contextos
+* Servicios__urlFacetas__externo: url donde se aloja el servicio de facetas, esta url se usa desde las llamadas javascript, en el caso de que no esté configurada se usará Servicios__urlFacetas.
+* Servicios__urlResultados__externo: url donde se aloja el servicio de resultados, esta url se usa desde las llamadas javascript, en el caso de que no esté configurada se usará Servicios__urlResultados.
+* Servicios__autocompletar: url donde se aloja el servicio de autocompletar.
+* Servicios__etiquetadoAutomatico: url donde se aloja el servicio de etiquetado automático.
+* Servicios__autocompletarEtiquetas: url donde se aloja el servicio de autocompletar etiquetas.
+* Servicios__urlInterno: url donde se aloja el servicio interno.
+* Servicios__urlArchivos: url donde se aloja el servicio de ontologías o de archivos.
+* Servicios__urlDocuments: url donde se aloja el servicio de documentos.
+* Servicios__urlContent: url donde se aloja los elementos personalizados.
+* Servicios__urlOauth: url donde se aloja el servicio de autenticación oauth.
+* Servicios__urlBase: url principal de la aplicación.
+* Servicios__urlLucene: url donde se aloja el servicio de índices de lucene.
+* dominio: dominio de la aplicación.
+* https: booleano para indicar si está instalado con https, por defecto a true.
+* connectionType: número que indica el tipo de base de datos:
+    * 0 para SqlServer.
+    * 1 para Oracle.
+    * 2 para PostgreSQL.
+* Virtuoso__Escritura__VirtuosoLecturaPruebasGnoss_v3: cadena de conexión para el virtuoso de escritura de la replicación bidireccional, con el nombre de la cola de Rabbit VirtuosoLecturaPruebasGnoss_v3. El Patrón de esta configuración es Virtuoso__Escritura__{nombre_de_la_cola}
+* Virtuoso__Escritura__VirtuosoLecturaPruebasGnoss_v4: cadena de conexión para el virtuoso de escritura de la replicación bidireccional, con el nombre de la cola de Rabbit VirtuosoLecturaPruebasGnoss_v4. El Patrón de esta configuración es Virtuoso__Escritura__{nombre_de_la_cola}
+* BidirectionalReplication__VirtuosoLecturaPruebasGnoss_v3: el Patrón de esta configuración es BidirectionalReplication__{nombre_de_la_cola}. Hace referencia a la cola a la cual tiene que insertar el servicio que lee de esta cola, este valor es el opuesto al que hace referencia este nombre, es decir, en este caso estamos en la cola  VirtuosoLecturaPruebasGnoss_v3, el valor seria VirtuosoLecturaPruebasGnoss_v4, que es el opuesto. Solo para la replicación bidireccional.
+* BidirectionalReplication__VirtuosoLecturaPruebasGnoss_v4: el Patrón de esta configuración es BidirectionalReplication__{nombre_de_la_cola}. Hace referencia a la cola a la cual tiene que insertar el servicio que lee de esta cola, este valor es el opuesto al que hace referencia este nombre, es decir, en este caso estamos en la cola  VirtuosoLecturaPruebasGnoss_v4, el valor seria VirtuosoLecturaPruebasGnoss_v3, que es el opuesto. Solo para la replicación bidireccional.
+* replicacionActivada: booleano que indica si está la replicación de virtuoso activada (true por defecto).
+* replicacionActivadaHome: booleano para indicar si la replicación de la mensajería está activada (true por defecto).
+* VirtuosoHome__VirtuosoEscrituraHome: cadena de conexión para escritura del virtuoso home. Si este parámetro está configurado tiene que estar la replicacionActivdaHome a true.
+* Virtuoso__virtuosoEndpointEN: url del endpoint de dbpedia en inglés, por defecto http://dbpedia.org/sparql
+* Virtuoso__virtuosoEndpointES: url del endpoint de dbpedia en español, por defecto  http://es.dbpedia.org/sparql
+* DesplegadoDocker: booleano para indicar si se ha desplegado en docker, por defecto false
+* rutaOntologias: ruta donde se van a encontrar las ontologías.
+* rutaMapping: ruta donde va a estar el mapeo del tesauro.
+* intervalo: segundos durante los que un proceso se queda dormido, por defecto 60.
+* ColaReplicacionMaster_ColaReplicaVirtuosoTest1: configuración tanto para la replicación normal como para la bidireccional, el patrón de esta configuración es ColaReplicacionMaster__{nombre_de_la_cola_Rabbit}. Esta configuración va a leer del nombre de la cola, en este caso ColaReplicaVirtuosoTest1 y va insertar en el virtuoso que tenga configurado este parámetro, ya que su valor es una cadena de conexión de virtuoso.
+* ColaReplicacionMaster_ColaReplicaVirtuosoTest2: configuración tanto para la replicación normal como para la bidireccional, el patrón de esta configuración es ColaReplicacionMaster__{nombre_de_la_cola_Rabbit}. Esta configuración va a leer del nombre de la cola, en este caso ColaReplicaVirtuosoTest2 y va insertar en el virtuoso que tenga configurado este parámetro, ya que su valor es una cadena de conexión de virtuoso.
+* ColaReplicacionMasterHome__ColaReplicaHome1: configuración tanto para la replicación normal como para la bidireccional de la home, el patrón de esta configuración es ColaReplicacionMasterHome__{nombre_de_la_cola_Rabbit}. Esta configuración va a leer del nombre de la cola, en este caso ColaReplicaHome1 y va insertar en el virtuoso que tenga configurado este parámetro, ya que su valor es una cadena de conexión de virtuoso.
+* ruta: ruta de los ficheros para la carga masiva.
+* ProyectoGnoss: guid para determinar el proyecto ID de la meta comunidad, si no se configura coge por defecto un Guid con todo unos.
+* ProyectoConexion: comunidad principal del proyecto, necesario para configurar la urlCorta.
+* UbicacionIndiceLucene: Ubicación donde se va a guardar el índice de lucene.
+* JSYCSSunificado: booleano que indica si hay que coger los ficheros unificados, por defecto false.
+* UrlIntraGnoss: obtiene la url de intragnoss
+* hilosAplicacion: configuración para el oauth, obtiene los hilos que va a arrancar la aplicación.
+* scopeIdentity: espacio al que tiene acceso la aplicación.
+* clientIDIdentity: nombre del cliente para autentificar la petición.
+* clientSecretIdentity: nombre del secret para autentificar la petición.
 
 
 # Código de conducta
