@@ -3,7 +3,7 @@ version: '3.8'
 services:
         
   web:
-    image: gnoss/gnoss.web.opencore:0.0.0_beta
+    image: gnoss/gnoss.web.opencore
     ports:
      - 8580:80
     mem_limit: 700m
@@ -58,7 +58,7 @@ services:
       - ./ViewsAdministracion:/app/ViewsAdministracion
   
   login:
-    image: gnoss/gnoss.web.login.opencore:0.0.0_beta
+    image: gnoss/gnoss.web.login.opencore
     ports:
      - 8581:80
     mem_limit: 200m
@@ -83,7 +83,7 @@ services:
       - ./logs/login:/app/logs
   
   facets:
-    image: gnoss/gnoss.web.facets.opencore:0.0.0_beta
+    image: gnoss/gnoss.web.facets.opencore
     ports:
      - 8582:80
     mem_limit: 300m
@@ -110,7 +110,7 @@ services:
       - ./logs/facets:/app/trazas
   
   results:
-    image: gnoss/gnoss.web.results.opencore:0.0.0_beta
+    image: gnoss/gnoss.web.results.opencore
     ports:
      - 8583:80
     mem_limit: 300m
@@ -139,7 +139,7 @@ services:
       - ./logs/results:/app/trazas
      
   intern:
-    image: gnoss/gnoss.web.intern.opencore:0.0.0_beta
+    image: gnoss/gnoss.web.intern.opencore
     ports:
      - 8584:80
     mem_limit: 200m
@@ -168,7 +168,7 @@ services:
       - ./content/Videos:/app/Videos  
      
   ontologies:
-    image: gnoss/gnoss.web.ontologies.opencore:0.0.0_beta
+    image: gnoss/gnoss.web.ontologies.opencore
     ports:
      - 8585:80
     mem_limit: 200m
@@ -195,7 +195,7 @@ services:
       - ./content/ontologies:/app/Ontologias
      
   documents:
-    image: gnoss/gnoss.web.documents.opencore:0.0.0_beta
+    image: gnoss/gnoss.web.documents.opencore
     ports:
      - 8586:80
     mem_limit: 200m
@@ -221,7 +221,7 @@ services:
       - ./content/Documentacion:/app/Documentacion
             
   autocomplete:
-    image: gnoss/gnoss.web.autocomplete.opencore:0.0.0_beta
+    image: gnoss/gnoss.web.autocomplete.opencore
     ports:
      - 8587:80
     mem_limit: 200m
@@ -247,7 +247,7 @@ services:
       - ./logs/autocomplete:/app/logs
       
   api:
-    image: gnoss/gnoss.web.api.opencore:0.0.0_beta
+    image: gnoss/gnoss.web.api.opencore
     ports:
      - 8589:80
     mem_limit: 300m
@@ -293,7 +293,7 @@ services:
       - ./logs/api:/app/logs
       
   oauth:
-    image: gnoss/gnoss.web.oauth.opencore:0.0.0_beta
+    image: gnoss/gnoss.web.oauth.opencore
     ports:
      - 8590:80
     mem_limit: 200m
@@ -335,51 +335,9 @@ services:
      connectionType: ${connectionType}
     volumes:
       - ./logs/oauth:/app/logs
-     
-#  lucene_autocomplete:
-#    image: gnoss/luceneautocomplete
-#    ports:
-#     - 8592:80
-#    mem_limit: 200m
-#    memswap_limit: 200m
-#    restart: always
-#    environment:
-#     acid: ${acid}
-#     base: ${base}
-#     virtuosoConnectionString: ${virtuosoConnectionString}
-#     redis__redis__ip__master: ${redis__redis__ip__master}
-#     redis__redis__ip__read: ${redis__redis__ip__read}
-#     redis__redis__bd: ${redis__redis__bd}
-#     redis__redis__timeout: ${redis__redis__timeout}
-#     redis__recursos__ip__master: ${redis__recursos__ip__master}
-#     redis__recursos__ip__read: ${redis__recursos__ip__read}
-#     redis__recursos__bd: ${redis__recursos__bd}
-#     redis__recursos__timeout: ${redis__redis__timeout}
-#     idiomas: ${idiomas}
-#     tipoBD: 0
-#     Servicios__urlLucene: ${Servicios__urlLucene}
-#     Servicios__urlBase: ${Servicios__urlBase}
-#     connectionType: "0" 
-#    volumes:
-#      - ./logs/lucene_autocomplete:/app/logs
-#      
-#      
-#  lucene_api:
-#    image: gnoss/luceneapi
-#    ports:
-#     - 8591:80
-#    mem_limit: 300m
-#    memswap_limit: 300m
-#    restart: always
-#    environment:
-#     UbicacionIndiceLucene: "indices"
-#    volumes:
-#      - ./logs/lucene_api:/app/logs
-#      - ./indices_lucene:/app/indices      
-      
       
   labeler:
-    image: gnoss/gnoss.web.labeler.opencore:0.0.0_beta
+    image: gnoss/gnoss.web.labeler.opencore
     ports:
      - 8595:80
     mem_limit: 200m
