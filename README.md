@@ -184,6 +184,8 @@ Aplicación Web que se encarga de almacenar y servir las ontologías de la plata
 ### [Gnoss.Web.Results.OpenCORE](https://github.com/equipognoss/Gnoss.Web.Results.OpenCORE)
 Aplicación Web que se encarga de mostrar los resultados en una página de búsqueda. Los resultados pueden ser recursos, instancias de objetos de conocimiento, personas, grupos, etc.
 
+### [Gnoss.Web.IdentityServer.OpenCORE](https://github.com/equipognoss/Gnoss.Web.IdentityServer.OpenCORE)
+Aplicación Web que se encarga de proveer y validar los tokens de acceso para acceder a las aplicaciones de uso interno (intern, ontologies y documents).
 
 ## Tareas en segundo plano
 
