@@ -123,7 +123,7 @@ La Fuente correspondiente que se transmita y la información de instalación que
 
  
 ### 7.	Términos adicionales.
-Usted está obligado a conservar la atribución de la autoría y/o avisos legales existentes en la versión original, de forma que estén visible en el código fuente y exigir a otros usuarios, desarrolladores o programadores que utilicen el desarrollo por usted realizado este término adicional.
+Usted está obligado a conservar la atribución de la autoría y/o avisos legales existentes en la versión original, de forma que estén visible en el código fuente y exigir a otros usuarios, desarrolladores o programadores que utilicen el desarrollo por usted realizado este término adicional. Asimismo, en aquellos desarrollos realizados utilizando GNOSS Semantic AI Platform Open CORE o sus programas derivados, deberá figurar de forma visible en todas las páginas web (preferentemente en el pie de página) el texto “Con tecnología GNOSS” 
 
 Los “permisos adicionales” son términos que complementan los términos de esta Licencia al permitir excepciones a una o más condiciones. Los permisos adicionales que se aplican al Programa en su totalidad deberán tratarse como si formaran parte de esta Licencia, en la medida en que sean válidos según las leyes aplicables. En el caso de que los permisos adicionales se apliquen únicamente a una parte del Programa, esta parte podrá utilizarse por separado conforme a dichos permisos, pero el Programa en su totalidad seguirá rigiéndose de acuerdo con esta Licencia independientemente de los permisos adicionales.
 
