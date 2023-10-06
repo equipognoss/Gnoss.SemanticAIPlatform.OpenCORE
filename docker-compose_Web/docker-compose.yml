@@ -3,163 +3,76 @@ version: '3.8'
 services:
         
   web:
-    image: gnoss/gnoss.web.opencore
-    ports:
-     - 8580:80
+    image: gnoss/gnoss.web.opencore:${version}
     mem_limit: 700m
     memswap_limit: 700m
     restart: always
+    env_file:
+      - ${ruta_docker_env}
     environment:
-     acid: ${acid}
-     base: ${base}
-     oauth: ${oauth}
-     virtuosoConnectionString: ${virtuosoConnectionString}
-     virtuosoConnectionString_home: ${virtuosoConnectionString_home}
-     redis__redis__ip__master: ${redis__redis__ip__master}
-     redis__redis__ip__read: ${redis__redis__ip__read}
-     redis__redis__bd: ${redis__redis__bd}
-     redis__redis__timeout: ${redis__redis__timeout}
-     redis__recursos__ip__master: ${redis__recursos__ip__master}
-     redis__recursos__ip__read: ${redis__recursos__ip__read}
-     redis__recursos__bd: ${redis__recursos__bd}
-     redis__recursos__timeout: ${redis__redis__timeout}
-     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
-     redis__liveUsuarios__ip__read: ${redis__liveUsuarios__ip__read}
-     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
-     redis__liveUsuarios__timeout: ${redis__redis__timeout}
-     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
-     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
-     idiomas: ${idiomas}
-     IpServicioSocketsOffline: ${IpServicioSocketsOffline}
-     PuertoServicioSocketsOffline: ${PortServicioSocketsOffline}
-     Servicios__urlLogin: ${Servicios__urlLogin}
-     Servicios__urlFacetas: "http://facetas/CargadorFacetas"
-     Servicios__urlFacetas__externo: ${Servicios__urlFacetas__externo}
-     Servicios__urlResultados: "http://resultados/CargadorResultados"
-     Servicios__contextosHome: ${Servicios__contextosHome}
-     Servicios__urlResultados__externo: ${Servicios__urlResultados__externo}
-     Servicios__autocompletar: ${Servicios__autocompletar}
-     Servicios__etiquetadoAutomatico: ${Servicios__etiquetadoAutomatico}
-     Servicios__autocompletarEtiquetas: ${Servicios__autocompletarEtiquetas}
-     Servicios__urlInterno: "http://interno"
-     Servicios__urlArchivos: ${Servicios__urlArchivos}
-     Servicios__urlDocuments: "http://documents/GestorDocumental"
-     Servicios__urlContent: ${Servicios__urlContent}
-     Servicios__urlStatic: ${Servicios__urlStatic}
-     dominio: ${dominio}
-     https: "true"
-     connectionType: ${connectionType}
-     replicacionActivadaHome: "false"
-     replicacionActivada: "false"
-     DesplegadoDocker: "true"
+      #Servicios
+      Servicios__autocompletar: "${schema_servicios}://${dominio_servicios}/autocompletar/autocompletar"
+      Servicios__contextosHome: "${schema_servicios}://${dominio_servicios}/resultados/CargadorContextoMensajes"
+      Servicios__etiquetadoAutomatico: "${schema_servicios}://${dominio_servicios}/autocompletaretiquetas/EtiquetadoAutomatico"
+      Servicios__urlApi: ${schema_servicios}://${dominio_servicios}/api
+      Servicios__urlBase: https://${dominio_web}
+      Servicios__urlContent: "${schema_servicios}://${dominio_servicios}"
+      Servicios__urlFacetas__externo: "${schema_servicios}://${dominio_servicios}/facetas/CargadorFacetas"
+      Servicios__urlLogin: "${schema_servicios}://${dominio_servicios}/login"
+      Servicios__urlResultados__externo: "${schema_servicios}://${dominio_servicios}/resultados/CargadorResultados"
+      Servicios__urlStatic: "${schema_servicios}://${dominio_servicios}/static"
+      Virtuoso__Escritura__VirtuosoMaster: ${virtuosoConnectionString}
+      virtuosoHome__VirtuosoEscrituraHome: ${virtuosoConnectionString_home}
     volumes:
       - ./logs/web:/app/logs
-      - ./logs/web:/app/trazas
-      - ./ViewsAdministracion:/app/ViewsAdministracion
   
   login:
-    image: gnoss/gnoss.web.login.opencore
-    ports:
-     - 8581:80
+    image: gnoss/gnoss.web.login.opencore:${version}
     mem_limit: 200m
     memswap_limit: 200m
     restart: always
+    env_file:
+      - ${ruta_docker_env}
     environment:
-     virtuosoConnectionString: ${virtuosoConnectionString}
-     acid: ${acid}
-     base: ${base}
-     redis__redis__ip__master: ${redis__redis__ip__master}
-     redis__redis__ip__read: ${redis__redis__ip__read}
-     redis__redis__bd: ${redis__redis__bd}
-     redis__redis__timeout: ${redis__redis__timeout}
-     redis__recursos__ip__master: ${redis__recursos__ip__master}
-     redis__recursos__ip__read: ${redis__recursos__ip__read}
-     redis__recursos__bd: ${redis__recursos__bd}
-     redis__recursos__timeout: ${redis__redis__timeout}
-     idiomas: ${idiomas}
-     Servicios__urlBase: ${Servicios__urlBase}
-     connectionType: ${connectionType} 
+     Servicios__urlBase: ${schema_servicios}://${dominio_servicios}
     volumes:
       - ./logs/login:/app/logs
   
   facets:
-    image: gnoss/gnoss.web.facets.opencore
-    ports:
-     - 8582:80
+    image: gnoss/gnoss.web.facets.opencore:${version}
     mem_limit: 300m
     memswap_limit: 300m
     restart: always
+    env_file:
+      - ${ruta_docker_env}
     environment:
-     virtuosoConnectionString: ${virtuosoConnectionString}
-     virtuosoConnectionString_home: ${virtuosoConnectionString_home}
-     acid: ${acid}
-     base: ${base}
-     redis__redis__ip__master: ${redis__redis__ip__master}
-     redis__redis__ip__read: ${redis__redis__ip__read}
-     redis__redis__bd: ${redis__redis__bd}
-     redis__redis__timeout: ${redis__redis__timeout}
-     redis__recursos__ip__master: ${redis__recursos__ip__master}
-     redis__recursos__ip__read: ${redis__recursos__ip__read}
-     redis__recursos__bd: ${redis__recursos__bd}
-     redis__recursos__timeout: ${redis__redis__timeout}
-     idiomas: ${idiomas}
-     Servicios__urlBase: ${Servicios__urlBase}
-     connectionType: ${connectionType}
+     Servicios__urlContent: "${schema_servicios}://${dominio_servicios}"
     volumes:
       - ./logs/facets:/app/logs
-      - ./logs/facets:/app/trazas
   
   results:
-    image: gnoss/gnoss.web.results.opencore
-    ports:
-     - 8583:80
+    image: gnoss/gnoss.web.results.opencore:${version}
     mem_limit: 300m
     memswap_limit: 300m
     restart: always
+    env_file:
+      - ${ruta_docker_env}
     environment:
-     virtuosoConnectionString: ${virtuosoConnectionString}
-     virtuosoConnectionString_home: ${virtuosoConnectionString_home}
-     acid: ${acid}
-     base: ${base}
-     redis__redis__ip__master: ${redis__redis__ip__master}
-     redis__redis__ip__read: ${redis__redis__ip__read}
-     redis__redis__bd: ${redis__redis__bd}
-     redis__redis__timeout: ${redis__redis__timeout}
-     redis__recursos__ip__master: ${redis__recursos__ip__master}
-     redis__recursos__ip__read: ${redis__recursos__ip__read}
-     redis__recursos__bd: ${redis__recursos__bd}
-     redis__recursos__timeout: ${redis__redis__timeout}
-     idiomas: ${idiomas}
-     Servicios__urlBase: ${Servicios__urlBase}
-     Servicios__urlContent: ${Servicios__urlContent}
-     Servicios__urlStatic: ${Servicios__urlStatic}
-     connectionType: ${connectionType}
+     Servicios__urlBase: ${schema_servicios}://${dominio_servicios}
+     Servicios__urlContent: "${schema_servicios}://${dominio_servicios}"
+     Servicios__urlStatic: "${schema_servicios}://${dominio_servicios}/static"
     volumes:
       - ./logs/results:/app/logs
-      - ./logs/results:/app/trazas
      
   intern:
-    image: gnoss/gnoss.web.intern.opencore
-    ports:
-     - 8584:80
+    image: gnoss/gnoss.web.intern.opencore:${version}
     mem_limit: 200m
     memswap_limit: 200m
     restart: always
+    env_file:
+      - ${ruta_docker_env}
     environment:
-     virtuosoConnectionString: ${virtuosoConnectionString}
-     acid: ${acid}
-     base: ${base}
-     redis__redis__ip__master: ${redis__redis__ip__master}
-     redis__redis__ip__read: ${redis__redis__ip__read}
-     redis__redis__bd: ${redis__redis__bd}
-     redis__redis__timeout: ${redis__redis__timeout}
-     redis__recursos__ip__master: ${redis__recursos__ip__master}
-     redis__recursos__ip__read: ${redis__recursos__ip__read}
-     redis__recursos__bd: ${redis__recursos__bd}
-     redis__recursos__timeout: ${redis__redis__timeout}
-     idiomas: ${idiomas}
-     Servicios__urlBase: ${Servicios__urlBase}
-     connectionType: ${connectionType}
+     Servicios__urlContent: "${schema_servicios}://${dominio_servicios}"
     volumes:
       - ./logs/intern:/app/logs
       - ./content/doclinks:/app/doclinks
@@ -168,198 +81,130 @@ services:
       - ./content/Videos:/app/Videos  
      
   ontologies:
-    image: gnoss/gnoss.web.ontologies.opencore
-    ports:
-     - 8585:80
+    image: gnoss/gnoss.web.ontologies.opencore:${version}
     mem_limit: 200m
     memswap_limit: 200m
     restart: always
+    env_file:
+      - ${ruta_docker_env}
     environment:
-     virtuosoConnectionString: ${virtuosoConnectionString}
-     acid: ${acid}
-     base: ${base}
-     redis__redis__ip__master: ${redis__redis__ip__master}
-     redis__redis__ip__read: ${redis__redis__ip__read}
-     redis__redis__bd: ${redis__redis__bd}
-     redis__redis__timeout: ${redis__redis__timeout}
-     redis__recursos__ip__master: ${redis__recursos__ip__master}
-     redis__recursos__ip__read: ${redis__recursos__ip__read}
-     redis__recursos__bd: ${redis__recursos__bd}
-     redis__recursos__timeout: ${redis__redis__timeout}
-     idiomas: ${idiomas}
-     Servicios__urlBase: ${Servicios__urlBase}
-     connectionType: ${connectionType}
+     Servicios__urlContent: "${schema_servicios}://${dominio_servicios}"
      rutaOntologias: "/app/Ontologias/Archivos"
     volumes:
       - ./logs/ontologies:/app/logs
       - ./content/ontologies:/app/Ontologias
      
   documents:
-    image: gnoss/gnoss.web.documents.opencore
-    ports:
-     - 8586:80
+    image: gnoss/gnoss.web.documents.opencore:${version}
     mem_limit: 200m
     memswap_limit: 200m
     restart: always
+    env_file:
+      - ${ruta_docker_env}
     environment:
-     virtuosoConnectionString: ${virtuosoConnectionString}
-     acid: ${acid}
-     base: ${base}
-     redis__redis__ip__master: ${redis__redis__ip__master}
-     redis__redis__ip__read: ${redis__redis__ip__read}
-     redis__redis__bd: ${redis__redis__bd}
-     redis__redis__timeout: ${redis__redis__timeout}
-     redis__recursos__ip__master: ${redis__recursos__ip__master}
-     redis__recursos__ip__read: ${redis__recursos__ip__read}
-     redis__recursos__bd: ${redis__recursos__bd}
-     redis__recursos__timeout: ${redis__redis__timeout}
-     idiomas: ${idiomas}
-     Servicios__urlBase: ${Servicios__urlBase}
-     connectionType: ${connectionType}
+     Servicios__urlContent: "${schema_servicios}://${dominio_servicios}"
     volumes:
       - ./logs/documents:/app/logs
       - ./content/Documentacion:/app/Documentacion
             
   autocomplete:
-    image: gnoss/gnoss.web.autocomplete.opencore
-    ports:
-     - 8587:80
+    image: gnoss/gnoss.web.autocomplete.opencore:${version}
     mem_limit: 200m
     memswap_limit: 200m
     restart: always
+    env_file:
+      - ${ruta_docker_env}
     environment:
-     virtuosoConnectionString: ${virtuosoConnectionString}
-     virtuosoConnectionString_home: ${virtuosoConnectionString_home}
-     acid: ${acid}
-     base: ${base}
-     redis__redis__ip__master: ${redis__redis__ip__master}
-     redis__redis__ip__read: ${redis__redis__ip__read}
-     redis__redis__bd: ${redis__redis__bd}
-     redis__redis__timeout: ${redis__redis__timeout}
-     redis__recursos__ip__master: ${redis__recursos__ip__master}
-     redis__recursos__ip__read: ${redis__recursos__ip__read}
-     redis__recursos__bd: ${redis__recursos__bd}
-     redis__recursos__timeout: ${redis__redis__timeout}
-     idiomas: ${idiomas}
-     Servicios__urlBase: ${Servicios__urlBase}
-     connectionType: ${connectionType}
+     Servicios__urlContent: "${schema_servicios}://${dominio_servicios}"
     volumes:
       - ./logs/autocomplete:/app/logs
       
   api:
-    image: gnoss/gnoss.web.api.opencore
-    ports:
-     - 8589:80
+    image: gnoss/gnoss.web.api.opencore:${version}
     mem_limit: 300m
     memswap_limit: 300m
     restart: always
+    env_file:
+      - ${ruta_docker_env}
     environment:
-     acid: ${acid}
-     base: ${base}
-     oauth: ${oauth}
-     virtuosoConnectionString: ${virtuosoConnectionString}
-     redis__redis__ip__master: ${redis__redis__ip__master}
-     redis__redis__ip__read: ${redis__redis__ip__read}
-     redis__redis__bd: ${redis__redis__bd}
-     redis__redis__timeout: ${redis__redis__timeout}
-     redis__recursos__ip__master: ${redis__recursos__ip__master}
-     redis__recursos__ip__read: ${redis__recursos__ip__read}
-     redis__recursos__bd: ${redis__recursos__bd}
-     redis__recursos__timeout: ${redis__redis__timeout}
-     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
-     redis__liveUsuarios__ip__read: ${redis__liveUsuarios__ip__read}
-     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
-     redis__liveUsuarios__timeout: ${redis__redis__timeout}
-     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
-     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
-     idiomas: ${idiomas}
      IpServicioSocketsOffline: ${IpServicioSocketsOffline}   
      PuertoServicioSocketsOffline: ${PortServicioSocketsOffline}                           
-     Servicios__urlLogin: ${Servicios__urlLogin}
-     Servicios__urlFacetas: "http://facetas/CargadorFacetas"
-     Servicios__urlResultados: "http://resultados/CargadorResultados"
-     Servicios__urlFacetas__externo: ${Servicios__urlFacetas__externo}
-     Servicios__urlResultados__externo: ${Servicios__urlResultados__externo}
-     Servicios__autocompletar: ${Servicios__autocompletar}
-     Servicios__urlInterno: "http://interno"
-     Servicios__urlArchivos: ${Servicios__urlArchivos}
-     Servicios__urlDocuments: "http://documents/GestorDocumental"
-     Servicios__urlContent: ${Servicios__urlContent}
-     Servicios__urlOauth: "http://oauth/"
-     connectionType: ${connectionType}
-     replicacionActivadaHome: "false"
-     replicacionActivada: "false"
+     Servicios__urlLogin: "${schema_servicios}://${dominio_servicios}/login"
+     Servicios__urlFacetas__externo: "${schema_servicios}://${dominio_servicios}/facetas/CargadorFacetas"
+     Servicios__urlResultados__externo: "${schema_servicios}://${dominio_servicios}/resultados/CargadorResultados"
+     Servicios__autocompletar: "${schema_servicios}://${dominio_servicios}/autocompletar/autocompletar"
+     Servicios__urlContent: "${schema_servicios}://${dominio_servicios}"
     volumes:
       - ./logs/api:/app/logs
       
   oauth:
-    image: gnoss/gnoss.web.oauth.opencore
-    ports:
-     - 8590:80
+    image: gnoss/gnoss.web.oauth.opencore:${version}
     mem_limit: 200m
     memswap_limit: 200m
     restart: always
+    env_file:
+      - ${ruta_docker_env}
     environment:
-     acid: ${acid}
-     base: ${base}
-     oauth: ${oauth}
-     virtuosoConnectionString: ${virtuosoConnectionString}
-     redis__redis__ip__master: ${redis__redis__ip__master}
-     redis__redis__ip__read: ${redis__redis__ip__read}
-     redis__redis__bd: ${redis__redis__bd}
-     redis__redis__timeout: ${redis__redis__timeout}
-     redis__recursos__ip__master: ${redis__recursos__ip__master}
-     redis__recursos__ip__read: ${redis__recursos__ip__read}
-     redis__recursos__bd: ${redis__recursos__bd}
-     redis__recursos__timeout: ${redis__redis__timeout}
-     redis__liveUsuarios__ip__master: ${redis__liveUsuarios__ip__master}
-     redis__liveUsuarios__ip__read: ${redis__liveUsuarios__ip__read}
-     redis__liveUsuarios__bd: ${redis__liveUsuarios__bd}
-     redis__liveUsuarios__timeout: ${redis__redis__timeout}
-     RabbitMQ__colaReplicacion: ${RabbitMQ__colaReplicacion}
-     RabbitMQ__colaServiciosWin: ${RabbitMQ__colaServiciosWin}
-     idiomas: ${idiomas}
      IpServicioSocketsOffline: ${IpServicioSocketsOffline}
      PuertoServicioSocketsOffline: ${PortServicioSocketsOffline}
-     Servicios__urlLogin: ${Servicios__urlLogin}
-     Servicios__urlFacetas: "http://facetas/CargadorFacetas"
-     Servicios__urlResultados: "http://resultados/CargadorResultados"
-     Servicios__urlFacetas__externo: ${Servicios__urlFacetas__externo}
-     Servicios__urlResultados__externo: ${Servicios__urlResultados__externo}
-     Servicios__autocompletar: ${Servicios__autocompletar}
-     Servicios__urlInterno: "http://interno"
-     Servicios__urlArchivos: ${Servicios__urlArchivos}
-     Servicios__urlDocuments: "http://documents/GestorDocumental"
-     Servicios__urlContent: ${Servicios__urlContent}
-     Servicios__urlOauth: "http://oauth"
-     connectionType: ${connectionType}
+     Servicios__urlLogin: "${schema_servicios}://${dominio_servicios}/login"
+     Servicios__urlFacetas__externo: "${schema_servicios}://${dominio_servicios}/facetas/CargadorFacetas"
+     Servicios__urlResultados__externo: "${schema_servicios}://${dominio_servicios}/resultados/CargadorResultados"
+     Servicios__autocompletar: "${schema_servicios}://${dominio_servicios}/autocompletar/autocompletar"
+     Servicios__urlContent: "${schema_servicios}://${dominio_servicios}"
     volumes:
       - ./logs/oauth:/app/logs
       
   labeler:
-    image: gnoss/gnoss.web.labeler.opencore
-    ports:
-     - 8595:80
+    image: gnoss/gnoss.web.labeler.opencore:${version}
     mem_limit: 200m
     memswap_limit: 200m
     restart: always
+    env_file:
+      - ${ruta_docker_env}
     environment:
-     virtuosoConnectionString: ${virtuosoConnectionString}
-     virtuosoConnectionString_home: ${virtuosoConnectionString_home}
-     acid: ${acid}
-     base: ${base}
-     redis__redis__ip__master: ${redis__redis__ip__master}
-     redis__redis__ip__read: ${redis__redis__ip__read}
-     redis__redis__bd: ${redis__redis__bd}
-     redis__redis__timeout: ${redis__redis__timeout}
-     redis__recursos__ip__master: ${redis__recursos__ip__master}
-     redis__recursos__ip__read: ${redis__recursos__ip__read}
-     redis__recursos__bd: ${redis__recursos__bd}
-     redis__recursos__timeout: ${redis__redis__timeout}
-     idiomas: ${idiomas}
-     tipoBD: 0
-     Servicios__urlBase: ${Servicios__urlBase}
+     Servicios__urlBase: ${schema_servicios}://${dominio_servicios}
      connectionType: "0"
     volumes:
       - ./logs/labeler:/app/logs
       - ./logs/labeler:/app/trazas
+
+  identityserver:
+    image: gnoss/gnoss.web.identityserver.opencore:${version}
+    ports:
+      - ${puerto_identityserver}:${identityserver_puerto_contenedor}
+    restart: always
+    env_file:
+      - ${ruta_docker_env}
+    environment:
+      #Variables propias
+      IssuerUri: ${Authority}
+      scopeIdentity: ${scopeIdentity}
+      clientSecretIdentity: ${clientSecretIdentity}
+      clientIDIdentity: ${clientIDIdentity}
+      segundostoken: ${segundostoken}
+    volumes:
+      - ./logs/identityservercore:${volume_app_logs}
+      
+  nginx:
+    image: ${nginx_imagen}:${version}
+    container_name: ${proyecto}_nginx
+    ports:
+      - "${puerto_nginx}:80"
+      #- "${puerto_nginx_https}:443"
+    restart: ${nginx_politica_reinicio}
+    depends_on:
+      - web
+      - api
+    volumes:
+      - ${content_path}:/content
+      - ./logs/nginx:/var/log/nginx
+      #- web_certificate_crt_path:${web_certificate_crt_path}
+      #- web_certificate_key_path:${web_certificate_key_path}
+      #- api_certificate_crt_path:${api_certificate_crt_path}
+      #- api_certificate_key_path:${api_certificate_key_path}
+      #- services_certificate_crt_path:${services_certificate_crt_path}
+      #- services_certificate_key_path:${services_certificate_key_path}
+    environment:
+      services_domain: "${dominio_servicios}"
+    command: /bin/bash -c "envsubst '$${services_domain}  $${dominio}' < /etc/nginx/conf.d/gnoss_services.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
